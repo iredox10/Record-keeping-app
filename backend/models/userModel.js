@@ -3,10 +3,11 @@ import mongoose from "mongoose";
 const bcrypt = 'bcrypt'
 
 
-const registerSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   shopName: {
     type: String,
     required: true,
+    unique: true
   },
   email: {
     type: String,
@@ -27,14 +28,17 @@ const registerSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false
   },
+  records:[ {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'record'
+  }],
+  customers:[ {
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'customer'
+  }]
 });
 
-// registerSchema.pre('save', function(){
-//     if(this.password) {
-//       this.password = bcrypt.hash(this.password)
-//     }  
-// })
-
-export const Register = mongoose.model('register',registerSchema)
+export const User = mongoose.model('user',userSchema)
 
