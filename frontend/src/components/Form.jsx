@@ -1,29 +1,21 @@
+import {Link} from "react-router-dom"
+import {Button} from '../components/Button'
+import Input from './Input'
 
 function Form() {
   return (
     <>
-    <form>
-        <div className="mb-3">
-            <label htmlFor="shopName">shop name</label>
-            <input type="text" name="shopName" id="shopName" />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="email">email</label>
-            <input type="email" name="email" id="email" />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="phoneNumber">phone number</label>
-            <input type="number" name="number" id="number" />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="address">address</label>
-            <input type="text" name="address" id="address" />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="password">password</label>
-            <input type="password" name="password" id="password" />
-        </div>
+    <div className="w-[60%] py-20 px-7">
+    <form className="w-[50%] mx-auto p-2">
+        <Input labelName='shopName' labelText='shop name' inputType='text' inputName='shopName' inputId='shopName' />
+        <Input labelName='shopNumber' labelText='shop number' inputType='text' inputName='shopNumber' inputId='shopNumber' />
+        <Input labelName='email' labelText='email' inputType='email' inputName='email' inputId='email' />
+        <Input labelName='phoneNumber' labelText='phone number' inputType='number' inputName='phoneNumber' inputId='phoneNumber' />
+        <Input labelName='address' labelText='address' inputType='text' inputName='address' inputId='address' />
+        <Button name="register" />
+        <p className="capitalize">already have an account? <a href="/">login</a> </p>
     </form>
+    </div>
     </>
   )
 }
