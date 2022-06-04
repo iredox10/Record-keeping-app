@@ -23,8 +23,17 @@ export const register = async (req,res) => {
         let user = new User(req.body)
         let newUser = await user.save()
         const jwt = jwtSign(newUser.id)
-        res.json({jwt,newUser})
+        res.json({newUser})
     } catch (err) {
+        console.log(err)
+    }
+}
+
+export const get_user = async (req,res) => {
+    try{
+        const user = await User.findById(req.params.id)
+        res.json(user)
+    }catch(err){
         console.log(err)
     }
 }
@@ -77,17 +86,30 @@ export const add_record = async (req,res) => {
     }
 }
 
+export const get_record = async (req,res) => {
+    try{
+        const records = await User.findById(req.params.id).populate('records')
+        res.json(records.records)
+    }catch(err) {
+        console.log(err);
+        res.json(err)
+    }
+}
+
 export const login = async (req,res) =>{
     try{
         const shopName = await User.findOne({shopName: req.body.shopName})
         const password = await User.findOne({password: req.body.password})
-        
+
         if(shopName && password) {
             const jwt = jwtSign(shopName.id)
-            res.json({jwt,shopName})
+            res.json(shopName)
+        }else{
+            res.json('error')
         }
-    }
-    catch (err) {
+    }catch (err) {
         console.log(err)
+        res.json(err)
     }
+    console.log(req.body)
 }
