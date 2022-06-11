@@ -19,10 +19,10 @@ const customerSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    products:{
+    products:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'credit'
-    },
+    }],
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

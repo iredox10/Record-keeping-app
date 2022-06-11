@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const creditSchema = new mongoose.Schema({
-    customerName:{
-        type: String,
-        required: true,
-    },
     productName:{
         type: String,
         required: true,
@@ -19,10 +15,8 @@ const creditSchema = new mongoose.Schema({
     },
     credit:{
         type: Number,
+        default: 0
     },
-    date:{
-        type: Date,
-    },
-})
+},{timestamps:true})
 
 export const Credit = mongoose.model('credit', creditSchema)

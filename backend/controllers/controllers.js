@@ -23,7 +23,7 @@ export const register = async (req,res) => {
         let user = new User(req.body)
         let newUser = await user.save()
         const jwt = jwtSign(newUser.id)
-        res.json({newUser})
+        res.json({newUser,jwt})
     } catch (err) {
         console.log(err)
     }
@@ -57,6 +57,32 @@ export const add_customer = async (req,res) => {
     }
 }
 
+export const add_credit = async (req,res) => {
+    try {
+        const credit = await Credit.create({
+            productName: req.body.productName,
+            price: req.body.price,
+            amountPaid:req.body.amountPaid,
+            credits: req.body.credits,
+        })
+        const customer = await Customer.findById(req.params.id)
+        customer.products.push(credit)
+        await customer.save()
+        res.json({credit,customer})
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const get_credit = async (req,res) => {
+    try {
+        const credits = await Customer.findById(req.params.id).populate('products')
+        res.json(credits)
+    } catch (err) {
+        
+    }
+}
+
 export const get_customers = async (req,res) => {
     try {
         const customers = await User.findById(req.params.id).populate('customers')
@@ -82,7 +108,8 @@ export const add_record = async (req,res) => {
         user.save()
         res.json({record,user})
     } catch (err) {
-        console.log(err)
+        res.json(err)
+        // console.log(err)
     }
 }
 
@@ -91,7 +118,6 @@ export const get_record = async (req,res) => {
         const records = await User.findById(req.params.id).populate('records')
         res.json(records.records)
     }catch(err) {
-        console.log(err);
         res.json(err)
     }
 }
@@ -103,13 +129,11 @@ export const login = async (req,res) =>{
 
         if(shopName && password) {
             const jwt = jwtSign(shopName.id)
-            res.json(shopName)
+            res.json({shopName,jwt})
         }else{
-            res.json('error')
+            res.json('wrong credentials')
         }
     }catch (err) {
-        console.log(err)
         res.json(err)
     }
-    console.log(req.body)
 }

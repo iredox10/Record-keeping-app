@@ -12,8 +12,9 @@ export default function Login() {
   const handleLogIn = async (e) =>{
     e.preventDefault()
       const res = await axios.post('http://localhost:4000/api/log-in',{shopName,password})
-      const userId = res.data._id
-      console.log(res.data._id);
+      const userId = res.data.shopName._id
+      const jwt = res.data.jwt
+      localStorage.setItem('jwtAuth',jwt);
       Navigate('/user-page/' + userId)
   }
   return (
